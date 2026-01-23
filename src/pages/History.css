@@ -1,0 +1,119 @@
+.history {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* ---------- HEADER ---------- */
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.history-header h2 {
+  font-size: 2rem;
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.history-stats .stat {
+  color: #b0b8c4;
+  font-size: 1rem;
+}
+
+/* ---------- EMPTY ---------- */
+.no-data {
+  padding: 3rem;
+  text-align: center;
+  color: #64b5f6;
+  font-size: 1.1rem;
+}
+
+/* ---------- LIST ---------- */
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* ---------- CARD ---------- */
+.history-card {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #1a1f35, #0f1419);
+  border: 2px solid #2a3f5f;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.4);
+}
+
+.history-card.normal {
+  border-left: 6px solid #4caf50;
+}
+
+.history-card.defective {
+  border-left: 6px solid #f44336;
+}
+
+/* ---------- INFO ---------- */
+.history-info {
+  flex: 1;
+}
+
+.history-info h3 {
+  margin-bottom: 0.5rem;
+}
+
+.normal-text {
+  color: #4caf50;
+}
+
+.defective-text {
+  color: #f44336;
+}
+
+.history-info p {
+  color: #b0b8c4;
+  margin: 0.25rem 0;
+}
+
+/* ---------- IMAGE ---------- */
+.history-image img {
+  width: 120px;
+  height: auto;
+  border-radius: 8px;
+  border: 1px solid #2a3f5f;
+}
+
+/* ---------- DOWNLOAD ---------- */
+.download-btn {
+  display: inline-block;
+  margin-top: 0.75rem;
+  padding: 0.4rem 0.9rem;
+  background-color: #1976d2;
+  color: #ffffff;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+
+.download-btn:hover {
+  background-color: #1565c0;
+}
+
+/* ---------- MOBILE ---------- */
+@media (max-width: 768px) {
+  .history-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .history-image img {
+    width: 100%;
+  }
+}
