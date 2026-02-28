@@ -2,8 +2,9 @@ import { useEffect, useState } from 'react';
 import './History.css';
 
 /* 🔹 Firebase imports */
-import { ref, onValue } from "firebase/database";
+import { ref, onValue, remove } from "firebase/database";
 import { db } from "../firebase";
+import { getStorage, ref as sRef, deleteObject } from "firebase/storage";
 
 interface HistoryItem {
   pcb_image_state?: string;
@@ -15,6 +16,7 @@ interface HistoryItem {
 
 function History() {
   const [records, setRecords] = useState<HistoryItem[]>([]);
+  const storage = getStorage();
 
   useEffect(() => {
     const historyRef = ref(db, "pcb_inspection");
@@ -25,10 +27,28 @@ function History() {
       }
 
       const data = snapshot.val();
-      const list = Object.values(data) as HistoryItem[];
-      setRecords(list.reverse()); // latest first
+      const list = Object.entries(data).map(([key, value]) => ({
+        key,
+        ...(value as HistoryItem),
+      }));
+      setRecords(list.reverse());
     });
   }, []);
+
+  const handleDelete = async (key: string, imageUrl?: string) => {
+    try {
+      // 🔹 delete image from storage
+      if (imageUrl) {
+        const imgRef = sRef(storage, imageUrl);
+        await deleteObject(imgRef);
+      }
+
+      // 🔹 delete record from database
+      await remove(ref(db, `pcb_inspection/${key}`));
+    } catch (err) {
+      console.error("Delete failed:", err);
+    }
+  };
 
   return (
     <div className="history">
@@ -47,7 +67,7 @@ function History() {
         </div>
       ) : (
         <div className="history-list">
-          {records.map((item, index) => {
+          {records.map((item: any, index) => {
             const isGood = item.pcb_image_state === "GOOD";
 
             return (
@@ -83,6 +103,14 @@ function History() {
                       Download Image
                     </a>
                   )}
+
+                  {/* 🔴 DELETE BUTTON */}
+                  <button
+                    className="delete-btn"
+                    onClick={() => handleDelete(item.key, item.image_url)}
+                  >
+                    Delete
+                  </button>
                 </div>
 
                 <div className="history-image">
