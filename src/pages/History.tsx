@@ -84,7 +84,9 @@ function History() {
 
                   <p>
                     <strong>Status:</strong>{" "}
-                    {item.detailed_status ?? item.pcb_image_state ?? 'N/A'}
+                    {item.detailed_status?.startsWith("Manual Override")
+                      ? item.pcb_image_state
+                      : item.detailed_status ?? item.pcb_image_state ?? 'N/A'}
                   </p>
 
                   <p>
